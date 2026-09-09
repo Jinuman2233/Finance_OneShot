@@ -1,5 +1,7 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
+import SiteFooter from "@/components/SiteFooter";
+import SiteHeader from "@/components/SiteHeader";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -12,23 +14,59 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
+const siteUrl =
+  process.env.NEXT_PUBLIC_SITE_URL ?? "https://salary-calculator.vercel.app";
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  maximumScale: 5,
+  themeColor: "#f8fafc",
+};
+
 export const metadata: Metadata = {
-  title: "2025년 연봉 실수령액 계산기 | 4대보험 및 퇴직금 자동 계산",
+  metadataBase: new URL(siteUrl),
+  title: {
+    default: "직장인 금융 툴킷 | 실수령액·퇴직금 IRP·연말정산 계산기",
+    template: "%s | Office Finance Toolkit",
+  },
   description:
-    "2025년 기준 연봉·월급 실수령액을 바로 계산하세요. 국민연금·건강보험·고용보험·근로소득세·지방소득세 공제와 예상 퇴직금까지 한 번에 확인하는 무료 계산기입니다.",
+    "무료 직장인 금융 계산 포털. 연봉 실수령액, 퇴직금·IRP 절세, 연말정산 환급을 브라우저에서 즉시 시뮬레이션하세요. 개인 금융 데이터는 서버로 전송되지 않습니다.",
   keywords: [
-    "연봉 실수령액",
-    "월급 계산기",
-    "4대보험",
-    "퇴직금 계산",
-    "2025 급여 계산기",
+    "연봉 실수령액 계산기",
+    "월급 실수령액",
+    "4대보험 계산",
+    "퇴직금 계산기",
+    "IRP 절세",
+    "퇴직소득세",
+    "연말정산 시뮬레이터",
+    "신용카드 소득공제",
+    "직장인 금융",
+    "Office Finance Toolkit",
   ],
+  authors: [{ name: "Office Finance Toolkit" }],
+  creator: "Office Finance Toolkit",
+  robots: {
+    index: true,
+    follow: true,
+  },
+  alternates: {
+    canonical: "/",
+  },
   openGraph: {
-    title: "2025년 연봉 실수령액 계산기 | 4대보험 및 퇴직금 자동 계산",
+    title: "직장인 금융 툴킷 | 실수령액·퇴직금 IRP·연말정산 계산기",
     description:
-      "연봉 입력만으로 실수령액·4대보험·세금·퇴직금을 자동 계산합니다.",
+      "실수령액, 퇴직금·IRP, 연말정산을 한곳에서. 계산은 브라우저에서만 수행되며 서버에 금융 데이터를 저장하지 않습니다.",
+    url: siteUrl,
+    siteName: "Office Finance Toolkit",
     locale: "ko_KR",
     type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "직장인 금융 툴킷 | 실수령액·퇴직금 IRP·연말정산",
+    description:
+      "직장인을 위한 무료 실수령액·퇴직금·연말정산 시뮬레이션 포털",
   },
 };
 
@@ -38,7 +76,11 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       lang="ko"
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col font-sans">{children}</body>
+      <body className="flex min-h-full flex-col bg-slate-50 font-sans text-zinc-900">
+        <SiteHeader />
+        <div className="flex-1">{children}</div>
+        <SiteFooter />
+      </body>
     </html>
   );
 }

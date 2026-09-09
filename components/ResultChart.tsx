@@ -7,6 +7,7 @@ import {
   ResponsiveContainer,
   Tooltip,
 } from "recharts";
+import { formatTableNumber } from "@/lib/formatUtils";
 import { formatKRW, type CalculatorResult } from "@/utils/taxLogic";
 
 interface ResultChartProps {
@@ -145,14 +146,14 @@ export default function ResultChart({ result }: ResultChartProps) {
               <tr key={row.label} className="border-t border-slate-100">
                 <td className="px-4 py-2.5 text-slate-700">{row.label}</td>
                 <td className="px-4 py-2.5 text-right font-medium text-slate-900">
-                  {formatKRW(row.value)}원
+                  {formatTableNumber(row.value)}
                 </td>
               </tr>
             ))}
             <tr className="border-t border-slate-200 bg-slate-50">
               <td className="px-4 py-3 font-semibold text-slate-800">총 공제</td>
               <td className="px-4 py-3 text-right font-semibold text-slate-900">
-                {formatKRW(result.totalDeduction)}원
+                {formatTableNumber(result.totalDeduction)}
               </td>
             </tr>
           </tbody>
