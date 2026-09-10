@@ -1,4 +1,4 @@
-import { Calculator, Landmark, Receipt } from "lucide-react";
+import { Briefcase, Calculator, Clock, Landmark, Receipt } from "lucide-react";
 import AdUnit from "@/components/AdUnit";
 import LandingSEOArticle from "@/components/LandingSEOArticle";
 import ToolCard from "@/components/ToolCard";
@@ -14,10 +14,28 @@ const tools = [
     accent: "blue" as const,
   },
   {
+    href: "/overtime-pay",
+    title: "연장근로·주휴수당 계산기",
+    description:
+      "시급·연장·야간·휴일 근로와 사업장 5인 이상 여부를 반영해 가산수당과 주휴수당을 한 지급 주기 기준으로 계산합니다.",
+    badge: "신규",
+    icon: Clock,
+    accent: "blue" as const,
+  },
+  {
+    href: "/unemployment-benefits",
+    title: "실업급여(구직급여) 계산기",
+    description:
+      "수급 자격을 점검하고 1일 평균임금·가입기간·연령으로 구직급여 일액과 소정급여일수·총액을 추정합니다.",
+    badge: "신규",
+    icon: Briefcase,
+    accent: "emerald" as const,
+  },
+  {
     href: "/severance-irp",
     title: "퇴직금 · IRP 절세 시뮬레이터",
     description:
-      "단일 과세연도 기준으로 예상 퇴직금과 IRP 납입 시 세액공제 효과를 시뮬레이션합니다. 이직·퇴직 전 현금흐름을 점검하세요.",
+      "예상 퇴직금과 IRP 이전 시 세액 경감·운용 수익을 비교합니다. 입·퇴사일과 직전 3개월 임금으로 산정합니다.",
     badge: "절세",
     icon: Landmark,
     accent: "emerald" as const,
@@ -48,8 +66,8 @@ export default function Home() {
             <br className="hidden sm:block" /> 한곳에서 끝내세요
           </h1>
           <p className="mt-4 max-w-2xl text-base leading-relaxed text-zinc-600 sm:text-lg">
-            실수령액, 퇴직금·IRP 절세, 연말정산까지. 단일 과세연도 기준의
-            신뢰할 수 있는 시뮬레이션으로 급여·절세·환급을 빠르게 점검합니다.
+            실수령액, 연장·주휴, 실업급여, 퇴직금·IRP, 연말정산까지. 한 주기·한
+            사건 기준으로 급여와 보장을 빠르게 점검합니다.
           </p>
           <div className="mt-8 flex flex-wrap gap-3">
             <a
@@ -72,13 +90,13 @@ export default function Home() {
         <section id="tools" className="scroll-mt-20">
           <div className="mb-8 max-w-2xl">
             <h2 className="text-2xl font-bold tracking-tight text-zinc-900">
-              3가지 핵심 도구
+              5가지 핵심 도구
             </h2>
             <p className="mt-2 text-sm leading-relaxed text-zinc-600 sm:text-base">
-              총급여를 한 번 계산하면 연말정산 시뮬레이터에 자동으로 반영됩니다.
+              급여·수당·실업·절세 시뮬레이션을 한 포털에서 이용하세요.
             </p>
           </div>
-          <div className="grid grid-cols-1 gap-5 md:grid-cols-3">
+          <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
             {tools.map((tool) => (
               <ToolCard key={tool.href} {...tool} />
             ))}

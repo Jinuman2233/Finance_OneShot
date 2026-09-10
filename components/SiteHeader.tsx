@@ -3,6 +3,8 @@ import { Wallet } from "lucide-react";
 
 const navItems = [
   { href: "/salary-calculator", label: "실수령액" },
+  { href: "/overtime-pay", label: "연장·주휴" },
+  { href: "/unemployment-benefits", label: "실업급여" },
   { href: "/severance-irp", label: "퇴직금·IRP" },
   { href: "/year-end-tax", label: "연말정산" },
 ];
