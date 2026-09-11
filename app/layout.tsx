@@ -72,6 +72,9 @@ export const metadata: Metadata = {
     description:
       "직장인을 위한 무료 실수령액·퇴직금·연말정산 시뮬레이션 포털",
   },
+  other: {
+    "google-adsense-account": "ca-pub-2529486640514775",
+  },
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
