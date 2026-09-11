@@ -1,50 +1,46 @@
 import type { MetadataRoute } from "next";
 
-const siteUrl = process.env.NEXT_PUBLIC_SITE_URL
-  ? process.env.NEXT_PUBLIC_SITE_URL
-  : process.env.VERCEL_URL
-    ? `https://${process.env.VERCEL_URL}`
-    : "http://localhost:3000";
+/**
+ * Canonical production origin for Search Console.
+ * Avoid empty-string env values and never use markdown-wrapped URLs.
+ */
+const baseUrl = (() => {
+  const fromEnv = process.env.NEXT_PUBLIC_SITE_URL?.trim();
+  if (fromEnv) return fromEnv.replace(/\/$/, "");
+  return "https://salaryoneshot.com";
+})();
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const lastModified = new Date();
 
   return [
+    { url: baseUrl, lastModified, priority: 1.0 },
     {
-      url: siteUrl,
+      url: `${baseUrl}/salary-calculator`,
       lastModified,
-      changeFrequency: "weekly",
-      priority: 1,
+      priority: 0.8,
     },
     {
-      url: `${siteUrl}/salary-calculator`,
+      url: `${baseUrl}/severance-pay`,
       lastModified,
-      changeFrequency: "weekly",
-      priority: 0.9,
+      priority: 0.8,
     },
     {
-      url: `${siteUrl}/severance-irp`,
+      url: `${baseUrl}/tax-return`,
       lastModified,
-      changeFrequency: "weekly",
-      priority: 0.9,
+      priority: 0.8,
     },
     {
-      url: `${siteUrl}/year-end-tax`,
+      url: `${baseUrl}/overtime-pay`,
       lastModified,
-      changeFrequency: "weekly",
-      priority: 0.9,
+      priority: 0.8,
     },
     {
-      url: `${siteUrl}/overtime-pay`,
+      url: `${baseUrl}/unemployment-benefits`,
       lastModified,
-      changeFrequency: "weekly",
-      priority: 0.9,
+      priority: 0.8,
     },
-    {
-      url: `${siteUrl}/unemployment-benefits`,
-      lastModified,
-      changeFrequency: "weekly",
-      priority: 0.9,
-    },
+    { url: `${baseUrl}/privacy`, lastModified, priority: 0.5 },
+    { url: `${baseUrl}/terms`, lastModified, priority: 0.5 },
   ];
 }

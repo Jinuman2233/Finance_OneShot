@@ -1,7 +1,20 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  /* config options here */
+  async redirects() {
+    return [
+      {
+        source: "/severance-pay",
+        destination: "/severance-irp",
+        permanent: true,
+      },
+      {
+        source: "/tax-return",
+        destination: "/year-end-tax",
+        permanent: true,
+      },
+    ];
+  },
 };
 
 export default nextConfig;
