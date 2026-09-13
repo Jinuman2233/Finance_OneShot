@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import NumberField from "@/components/ui/NumberField";
 import { formatWon } from "@/lib/formatUtils";
 import { YEAR_END_TAX_CONSTANTS } from "@/lib/yearEndTaxCalc";
 import { useFinanceStore } from "@/store/useFinanceStore";
@@ -59,15 +60,14 @@ export default function TaxInputForm({
         <span className="mb-2 block text-sm font-medium text-zinc-700">
           총급여 (원)
         </span>
-        <input
-          type="number"
+        <NumberField
+          value={values.grossSalary}
+          onChange={(grossSalary) => update({ grossSalary })}
           min={0}
-          value={values.grossSalary || ""}
-          onChange={(e) =>
-            update({ grossSalary: Math.max(0, Number(e.target.value) || 0) })
-          }
-          className="w-full rounded-xl border border-zinc-200 bg-zinc-50 px-4 py-3 font-semibold text-zinc-900 outline-none focus:border-teal-600 focus:ring-2 focus:ring-teal-600"
+          emptyValue={0}
           placeholder="50,000,000"
+          aria-label="총급여"
+          className="w-full rounded-xl border border-zinc-200 bg-zinc-50 px-4 py-3 text-base font-semibold text-zinc-900 outline-none focus:border-teal-600 focus:ring-2 focus:ring-teal-600"
         />
         <p className="mt-1.5 text-xs text-zinc-500">
           현재 {formatWon(values.grossSalary)}원 · 최저사용금액(25%){" "}
@@ -80,16 +80,13 @@ export default function TaxInputForm({
           <span className="mb-2 block text-sm font-medium text-zinc-700">
             신용카드 사용액 (원)
           </span>
-          <input
-            type="number"
+          <NumberField
+            value={values.creditCardSpend}
+            onChange={(creditCardSpend) => update({ creditCardSpend })}
             min={0}
-            value={values.creditCardSpend || ""}
-            onChange={(e) =>
-              update({
-                creditCardSpend: Math.max(0, Number(e.target.value) || 0),
-              })
-            }
-            className="w-full rounded-xl border border-zinc-200 bg-zinc-50 px-4 py-3 font-medium text-zinc-900 outline-none focus:border-teal-600 focus:ring-2 focus:ring-teal-600"
+            emptyValue={0}
+            aria-label="신용카드 사용액"
+            className="w-full rounded-xl border border-zinc-200 bg-zinc-50 px-4 py-3 text-base font-medium text-zinc-900 outline-none focus:border-teal-600 focus:ring-2 focus:ring-teal-600"
           />
           <p className="mt-1 text-xs text-zinc-400">공제율 15% (문턱 초과분)</p>
         </label>
@@ -97,16 +94,13 @@ export default function TaxInputForm({
           <span className="mb-2 block text-sm font-medium text-zinc-700">
             체크·현금 사용액 (원)
           </span>
-          <input
-            type="number"
+          <NumberField
+            value={values.debitCashSpend}
+            onChange={(debitCashSpend) => update({ debitCashSpend })}
             min={0}
-            value={values.debitCashSpend || ""}
-            onChange={(e) =>
-              update({
-                debitCashSpend: Math.max(0, Number(e.target.value) || 0),
-              })
-            }
-            className="w-full rounded-xl border border-zinc-200 bg-zinc-50 px-4 py-3 font-medium text-zinc-900 outline-none focus:border-teal-600 focus:ring-2 focus:ring-teal-600"
+            emptyValue={0}
+            aria-label="체크·현금 사용액"
+            className="w-full rounded-xl border border-zinc-200 bg-zinc-50 px-4 py-3 text-base font-medium text-zinc-900 outline-none focus:border-teal-600 focus:ring-2 focus:ring-teal-600"
           />
           <p className="mt-1 text-xs text-zinc-400">공제율 30% (문턱 초과분)</p>
         </label>
@@ -116,20 +110,14 @@ export default function TaxInputForm({
         <span className="mb-2 block text-sm font-medium text-zinc-700">
           연금·IRP 납입액 (원)
         </span>
-        <input
-          type="number"
+        <NumberField
+          value={values.pensionIrp}
+          onChange={(pensionIrp) => update({ pensionIrp })}
           min={0}
           max={YEAR_END_TAX_CONSTANTS.PENSION_LIMIT}
-          value={values.pensionIrp || ""}
-          onChange={(e) =>
-            update({
-              pensionIrp: Math.min(
-                YEAR_END_TAX_CONSTANTS.PENSION_LIMIT,
-                Math.max(0, Number(e.target.value) || 0),
-              ),
-            })
-          }
-          className="w-full rounded-xl border border-zinc-200 bg-zinc-50 px-4 py-3 font-medium text-zinc-900 outline-none focus:border-teal-600 focus:ring-2 focus:ring-teal-600"
+          emptyValue={0}
+          aria-label="연금·IRP 납입액"
+          className="w-full rounded-xl border border-zinc-200 bg-zinc-50 px-4 py-3 text-base font-medium text-zinc-900 outline-none focus:border-teal-600 focus:ring-2 focus:ring-teal-600"
         />
         <p className="mt-1 text-xs text-zinc-400">
           세액공제 한도 {formatWon(YEAR_END_TAX_CONSTANTS.PENSION_LIMIT)}원

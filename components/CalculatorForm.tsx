@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { Calculator, Users, Wallet } from "lucide-react";
+import NumberField from "@/components/ui/NumberField";
 import {
   calculateSalary,
   formatKRW,
@@ -14,11 +15,6 @@ import {
 interface CalculatorFormProps {
   onResultChange: (result: CalculatorResult, input: CalculatorInput) => void;
   initialAmount?: number;
-}
-
-function parseAmount(raw: string): number {
-  const digits = raw.replace(/[^\d]/g, "");
-  return digits ? Number(digits) : 0;
 }
 
 function displayAmount(value: number): string {
@@ -107,14 +103,15 @@ export default function CalculatorForm({
           {mode === "annual" ? "세전 연봉" : "세전 월급"}
         </span>
         <div className="relative">
-          <input
-            type="text"
-            inputMode="numeric"
-            value={displayAmount(amount)}
-            onChange={(e) => setAmount(parseAmount(e.target.value))}
-            className="w-full rounded-xl border border-slate-200 bg-slate-50 px-4 py-3 pr-12 text-lg font-semibold text-slate-900 outline-none ring-blue-600 transition focus:border-blue-600 focus:bg-white focus:ring-2"
+          <NumberField
+            value={amount}
+            onChange={setAmount}
+            min={0}
+            emptyValue={0}
+            formatBlurred={displayAmount}
             placeholder={mode === "annual" ? "50,000,000" : "4,166,667"}
             aria-label={mode === "annual" ? "세전 연봉" : "세전 월급"}
+            className="w-full rounded-xl border border-slate-200 bg-slate-50 px-4 py-3 pr-12 text-base font-semibold text-slate-900 outline-none ring-blue-600 transition focus:border-blue-600 focus:bg-white focus:ring-2"
           />
           <span className="pointer-events-none absolute right-4 top-1/2 -translate-y-1/2 text-sm text-slate-400">
             원
@@ -153,15 +150,14 @@ export default function CalculatorForm({
             <Users className="h-4 w-4 text-blue-600" aria-hidden />
             부양가족 수 (본인 포함)
           </span>
-          <input
-            type="number"
+          <NumberField
+            value={dependents}
+            onChange={setDependents}
             min={1}
             max={11}
-            value={dependents}
-            onChange={(e) =>
-              setDependents(Math.max(1, Math.min(11, Number(e.target.value) || 1)))
-            }
-            className="w-full rounded-xl border border-slate-200 bg-slate-50 px-4 py-3 font-semibold text-slate-900 outline-none ring-blue-600 focus:border-blue-600 focus:bg-white focus:ring-2"
+            emptyValue={1}
+            aria-label="부양가족 수"
+            className="w-full rounded-xl border border-slate-200 bg-slate-50 px-4 py-3 text-base font-semibold text-slate-900 outline-none ring-blue-600 focus:border-blue-600 focus:bg-white focus:ring-2"
           />
         </label>
 
@@ -169,16 +165,15 @@ export default function CalculatorForm({
           <span className="mb-2 block text-sm font-medium text-slate-700">
             근속 연수 (퇴직금)
           </span>
-          <input
-            type="number"
+          <NumberField
+            value={yearsOfService}
+            onChange={setYearsOfService}
             min={0}
             max={40}
-            step={0.5}
-            value={yearsOfService}
-            onChange={(e) =>
-              setYearsOfService(Math.max(0, Number(e.target.value) || 0))
-            }
-            className="w-full rounded-xl border border-slate-200 bg-slate-50 px-4 py-3 font-semibold text-slate-900 outline-none ring-blue-600 focus:border-blue-600 focus:bg-white focus:ring-2"
+            integer={false}
+            emptyValue={0}
+            aria-label="근속 연수"
+            className="w-full rounded-xl border border-slate-200 bg-slate-50 px-4 py-3 text-base font-semibold text-slate-900 outline-none ring-blue-600 focus:border-blue-600 focus:bg-white focus:ring-2"
           />
         </label>
       </div>

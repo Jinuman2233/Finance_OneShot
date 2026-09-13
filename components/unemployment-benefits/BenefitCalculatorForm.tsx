@@ -1,5 +1,6 @@
 "use client";
 
+import NumberField from "@/components/ui/NumberField";
 import { formatWon } from "@/lib/formatUtils";
 import type { AgeGroup } from "@/lib/unemploymentCalc";
 import {
@@ -79,37 +80,28 @@ export default function BenefitCalculatorForm({
             <span className="mb-2 block text-sm font-medium text-zinc-700">
               고용보험 가입 기간 (년)
             </span>
-            <input
-              type="number"
+            <NumberField
+              value={values.insuredYears}
+              onChange={(insuredYears) => update({ insuredYears })}
               min={0}
               max={40}
-              value={values.insuredYears}
-              onChange={(e) =>
-                update({
-                  insuredYears: Math.max(0, Number(e.target.value) || 0),
-                })
-              }
-              className="w-full rounded-xl border border-zinc-200 bg-zinc-50 px-4 py-3 font-semibold text-zinc-900 outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500"
+              emptyValue={0}
+              aria-label="고용보험 가입 기간(년)"
+              className="w-full rounded-xl border border-zinc-200 bg-zinc-50 px-4 py-3 text-base font-semibold text-zinc-900 outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500"
             />
           </label>
           <label className="block">
             <span className="mb-2 block text-sm font-medium text-zinc-700">
               추가 개월
             </span>
-            <input
-              type="number"
+            <NumberField
+              value={values.insuredMonthsExtra}
+              onChange={(insuredMonthsExtra) => update({ insuredMonthsExtra })}
               min={0}
               max={11}
-              value={values.insuredMonthsExtra}
-              onChange={(e) =>
-                update({
-                  insuredMonthsExtra: Math.min(
-                    11,
-                    Math.max(0, Number(e.target.value) || 0),
-                  ),
-                })
-              }
-              className="w-full rounded-xl border border-zinc-200 bg-zinc-50 px-4 py-3 font-semibold text-zinc-900 outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500"
+              emptyValue={0}
+              aria-label="고용보험 가입 추가 개월"
+              className="w-full rounded-xl border border-zinc-200 bg-zinc-50 px-4 py-3 text-base font-semibold text-zinc-900 outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500"
             />
           </label>
         </div>
@@ -121,18 +113,14 @@ export default function BenefitCalculatorForm({
               {formatWon(values.averageDailyWage)}원
             </span>
           </span>
-          <input
-            type="number"
+          <NumberField
+            value={values.averageDailyWage}
+            onChange={(averageDailyWage) => update({ averageDailyWage })}
             min={0}
-            step={1000}
-            value={values.averageDailyWage || ""}
-            onChange={(e) =>
-              update({
-                averageDailyWage: Math.max(0, Number(e.target.value) || 0),
-              })
-            }
-            className="w-full rounded-xl border border-zinc-200 bg-zinc-50 px-4 py-3 font-semibold text-zinc-900 outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500"
+            emptyValue={0}
             placeholder="120000"
+            aria-label="1일 평균임금"
+            className="w-full rounded-xl border border-zinc-200 bg-zinc-50 px-4 py-3 text-base font-semibold text-zinc-900 outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500"
           />
           <p className="mt-1.5 text-xs text-zinc-400">
             일액 = 평균임금×60% · 상한 {formatWon(DAILY_BENEFIT_UPPER)}원 · 하한{" "}

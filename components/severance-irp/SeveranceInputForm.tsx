@@ -1,5 +1,6 @@
 "use client";
 
+import NumberField from "@/components/ui/NumberField";
 import type { MonthWageInput, SeveranceCalcInput } from "@/lib/severanceCalc";
 
 export interface SeveranceFormValues {
@@ -16,11 +17,6 @@ interface SeveranceInputFormProps {
 }
 
 const monthLabels = ["3개월 전", "2개월 전", "최근 1개월"] as const;
-
-function num(raw: string): number {
-  const n = Number(raw.replace(/[^\d.]/g, ""));
-  return Number.isFinite(n) ? n : 0;
-}
 
 export default function SeveranceInputForm({
   values,
@@ -93,30 +89,28 @@ export default function SeveranceInputForm({
                   <span className="mb-1.5 block text-sm text-zinc-700">
                     기본급 (원)
                   </span>
-                  <input
-                    type="number"
+                  <NumberField
+                    value={month.basicSalary}
+                    onChange={(v) => updateMonth(idx, "basicSalary", v)}
                     min={0}
-                    value={month.basicSalary || ""}
-                    onChange={(e) =>
-                      updateMonth(idx, "basicSalary", num(e.target.value))
-                    }
-                    className="w-full rounded-lg border border-zinc-200 bg-white px-3 py-2.5 font-medium text-zinc-900 outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500"
-                    placeholder="3,000,000"
+                    emptyValue={0}
+                    placeholder="3000000"
+                    aria-label={`${label} 기본급`}
+                    className="w-full rounded-lg border border-zinc-200 bg-white px-3 py-2.5 text-base font-medium text-zinc-900 outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500"
                   />
                 </label>
                 <label className="block">
                   <span className="mb-1.5 block text-sm text-zinc-700">
                     기타 수당 (원)
                   </span>
-                  <input
-                    type="number"
+                  <NumberField
+                    value={month.allowance}
+                    onChange={(v) => updateMonth(idx, "allowance", v)}
                     min={0}
-                    value={month.allowance || ""}
-                    onChange={(e) =>
-                      updateMonth(idx, "allowance", num(e.target.value))
-                    }
-                    className="w-full rounded-lg border border-zinc-200 bg-white px-3 py-2.5 font-medium text-zinc-900 outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500"
-                    placeholder="200,000"
+                    emptyValue={0}
+                    placeholder="200000"
+                    aria-label={`${label} 기타 수당`}
+                    className="w-full rounded-lg border border-zinc-200 bg-white px-3 py-2.5 text-base font-medium text-zinc-900 outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500"
                   />
                 </label>
               </div>

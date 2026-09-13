@@ -1,5 +1,6 @@
 "use client";
 
+import NumberField from "@/components/ui/NumberField";
 import { formatWon } from "@/lib/formatUtils";
 
 export interface OvertimeFormValues {
@@ -75,16 +76,14 @@ export default function OvertimeInputForm({
           <span>시급 (원)</span>
           <span className="text-indigo-600">{formatWon(values.hourlyWage)}원</span>
         </span>
-        <input
-          type="number"
+        <NumberField
+          value={values.hourlyWage}
+          onChange={(hourlyWage) => update({ hourlyWage })}
           min={0}
-          step={100}
-          value={values.hourlyWage || ""}
-          onChange={(e) =>
-            update({ hourlyWage: Math.max(0, Number(e.target.value) || 0) })
-          }
-          className="w-full rounded-xl border border-zinc-200 bg-zinc-50 px-4 py-3 font-semibold text-zinc-900 outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500"
+          emptyValue={0}
           placeholder="10000"
+          aria-label="시급"
+          className="w-full rounded-xl border border-zinc-200 bg-zinc-50 px-4 py-3 text-base font-semibold text-zinc-900 outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500"
         />
       </label>
 
@@ -93,15 +92,14 @@ export default function OvertimeInputForm({
           <span className="mb-2 block text-sm font-medium text-zinc-700">
             소정근로시간 (시간)
           </span>
-          <input
-            type="number"
+          <NumberField
+            value={values.normalHours}
+            onChange={(normalHours) => update({ normalHours })}
             min={0}
-            step={0.5}
-            value={values.normalHours || ""}
-            onChange={(e) =>
-              update({ normalHours: Math.max(0, Number(e.target.value) || 0) })
-            }
-            className="w-full rounded-xl border border-zinc-200 bg-zinc-50 px-4 py-3 font-medium text-zinc-900 outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500"
+            integer={false}
+            emptyValue={0}
+            aria-label="소정근로시간"
+            className="w-full rounded-xl border border-zinc-200 bg-zinc-50 px-4 py-3 text-base font-medium text-zinc-900 outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500"
           />
           <p className="mt-1 text-xs text-zinc-400">주휴수당 산정 기준</p>
         </label>
@@ -110,17 +108,14 @@ export default function OvertimeInputForm({
           <span className="mb-2 block text-sm font-medium text-zinc-700">
             연장근로 (시간)
           </span>
-          <input
-            type="number"
+          <NumberField
+            value={values.overtimeHours}
+            onChange={(overtimeHours) => update({ overtimeHours })}
             min={0}
-            step={0.5}
-            value={values.overtimeHours || ""}
-            onChange={(e) =>
-              update({
-                overtimeHours: Math.max(0, Number(e.target.value) || 0),
-              })
-            }
-            className="w-full rounded-xl border border-zinc-200 bg-zinc-50 px-4 py-3 font-medium text-zinc-900 outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500"
+            integer={false}
+            emptyValue={0}
+            aria-label="연장근로시간"
+            className="w-full rounded-xl border border-zinc-200 bg-zinc-50 px-4 py-3 text-base font-medium text-zinc-900 outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500"
           />
           <p className="mt-1 text-xs text-zinc-400">일 8시간·주 40시간 초과분</p>
         </label>
@@ -129,15 +124,14 @@ export default function OvertimeInputForm({
           <span className="mb-2 block text-sm font-medium text-zinc-700">
             야간근로 22–06시 (시간)
           </span>
-          <input
-            type="number"
+          <NumberField
+            value={values.nightHours}
+            onChange={(nightHours) => update({ nightHours })}
             min={0}
-            step={0.5}
-            value={values.nightHours || ""}
-            onChange={(e) =>
-              update({ nightHours: Math.max(0, Number(e.target.value) || 0) })
-            }
-            className="w-full rounded-xl border border-zinc-200 bg-zinc-50 px-4 py-3 font-medium text-zinc-900 outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500"
+            integer={false}
+            emptyValue={0}
+            aria-label="야간근로시간"
+            className="w-full rounded-xl border border-zinc-200 bg-zinc-50 px-4 py-3 text-base font-medium text-zinc-900 outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500"
           />
           <p className="mt-1 text-xs text-zinc-400">야간 구간에 해당하는 시간</p>
         </label>
@@ -146,17 +140,14 @@ export default function OvertimeInputForm({
           <span className="mb-2 block text-sm font-medium text-zinc-700">
             휴일근로 (시간)
           </span>
-          <input
-            type="number"
+          <NumberField
+            value={values.holidayHours}
+            onChange={(holidayHours) => update({ holidayHours })}
             min={0}
-            step={0.5}
-            value={values.holidayHours || ""}
-            onChange={(e) =>
-              update({
-                holidayHours: Math.max(0, Number(e.target.value) || 0),
-              })
-            }
-            className="w-full rounded-xl border border-zinc-200 bg-zinc-50 px-4 py-3 font-medium text-zinc-900 outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500"
+            integer={false}
+            emptyValue={0}
+            aria-label="휴일근로시간"
+            className="w-full rounded-xl border border-zinc-200 bg-zinc-50 px-4 py-3 text-base font-medium text-zinc-900 outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500"
           />
           <p className="mt-1 text-xs text-zinc-400">5인 이상: 8시간 초과 시 2.0배</p>
         </label>
